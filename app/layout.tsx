@@ -1,15 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const oldschool = localFont({
+  src: [
+    {
+      path: "../public/fonts/oldschool/OldschoolGrotesk-NormalLight.otf",
+      weight: "200",
+    },
+    {
+      path: "../public/fonts/oldschool/OldschoolGrotesk-NormalRegular.otf",
+      weight: "300",
+    },
+    {
+      path: "../public/fonts/oldschool/OldschoolGrotesk-NormalMedium.otf",
+      weight: "400",
+    },
+    {
+      path: "../public/fonts/oldschool/OldschoolGrotesk-NormalBook.otf",
+      weight: "500",
+    },
+    {
+      path: "../public/fonts/oldschool/OldschoolGrotesk-NormalBold.otf",
+      weight: "600",
+    },
+  ],
+  variable: "--font-oldschool",
 });
 
 export const metadata: Metadata = {
@@ -23,12 +40,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider afterSignOutUrl="/">
+      <html lang="en">
+        <body
+          className={`${oldschool.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
